@@ -1,0 +1,10 @@
+services:
+    apwa.adunits.listener:
+        class: apwa\adunits\event\listener
+        arguments:
+            - @user
+            - @config
+            - @config_text
+            - @template
+        tags:
+            - { name: event.listener }

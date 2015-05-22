@@ -1,0 +1,15 @@
+<!-- IF S_ADUNITS_SIDEBAR_POSITION -->
+	<!-- IF S_ADUNITS_SIDEBAR_POSITION != 5 and S_ADUNITS_SIDEBAR_POSITION != 6 -->
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_ADUNITS_SIDEBAR_POSITION != 5 and S_ADUNITS_SIDEBAR_POSITION != 6 and (S_ADUNITS_SIDEBAR_POSITION == 2 or S_ADUNITS_SIDEBAR_POSITION == 4) -->
+	<div id="cp-menu">
+		<div id="sidebar-right" style="margin-left: 5px;">
+		{ADUNITS_POST_TEXT_SIDEBAR_TOP}
+		<!-- IF ADUNITS_POST_TEXT_SIDEBAR --><hr /><!-- ENDIF -->
+		{ADUNITS_POST_TEXT_SIDEBAR}
+		</div>
+	</div>
+	<!-- ENDIF -->
+<!-- ENDIF -->

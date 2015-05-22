@@ -1,0 +1,19 @@
+<!-- IF S_ADUNITS_SIDEBAR_POSITION and (S_VIEWFORUM or S_VIEWTOPIC) -->
+	<!-- IF S_ADUNITS_SIDEBAR_POSITION != 1 and S_ADUNITS_SIDEBAR_POSITION != 2 -->
+		</div>
+	<!-- ENDIF -->
+
+	<!-- IF S_ADUNITS_SIDEBAR_POSITION != 1 and S_ADUNITS_SIDEBAR_POSITION != 2 and (S_ADUNITS_SIDEBAR_POSITION == 4 or S_ADUNITS_SIDEBAR_POSITION == 6) -->
+	<div id="cp-menu">
+		<div id="sidebar-right" style="margin-left: 5px;">
+		{ADUNITS_POST_TEXT_SIDEBAR_TOP}
+		<!-- IF ADUNITS_POST_TEXT_SIDEBAR --><hr /><!-- ENDIF -->
+		{ADUNITS_POST_TEXT_SIDEBAR}
+		</div>
+	</div>
+	<!-- ENDIF -->
+<!-- ENDIF -->
+
+<!-- IF S_ADUNITS_FOOTER_POSITION == 2 or (S_ADUNITS_FOOTER_POSITION == 1 and S_INDEX) or (S_ADUNITS_FOOTER_POSITION == 3 and (S_VIEWFORUM or S_VIEWTOPIC)) -->
+<div id="adunits-footer" class="content">{ADUNITS_POST_TEXT_FOOTER}</div>
+<!-- ENDIF -->
