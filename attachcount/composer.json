@@ -1,0 +1,26 @@
+{
+    "name": "apwa/attachcount",
+    "type": "phpbb-extension",
+    "description": "Attachments counter for index",
+    "homepage": "http://bb3.mobi",
+    "keywords": ["attachments", "count", "download", "for index"],
+    "version": "1.0.0",
+    "time": "2015-05-22",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Developer Extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "Attachments Counter",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}
