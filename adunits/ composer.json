@@ -1,0 +1,26 @@
+{
+    "name": "apwa/adunits",
+    "type": "phpbb-extension",
+    "description": "Add, edit to advertising",
+    "homepage": "http://bb3.mobi",
+    "keywords": ["advertising", "ad unit", "ads", "block", "billboard"],
+    "version": "1.0.0",
+    "time": "2015-10-05",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Developer Extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "Ad Units",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}
