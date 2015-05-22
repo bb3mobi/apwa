@@ -1,0 +1,31 @@
+{
+    "name": "apwa/hashtag",
+    "type": "phpbb-extension",
+    "description": "HashTag extension for search.",
+    "homepage": "http://bb3.mobi",
+    "keywords": ["hashtag", "twitter", "search"],
+    "version": "1.0.0",
+    "time": "2015-05-22",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "-=GadZZillA=-",
+            "homepage": "http://desktopslab.ru/forum/member/-%3DGadZZillA%3D-/",
+            "role": "Developer"
+        },
+        {
+            "name": "Anvar",
+            "homepage": "http://apwa.ru",
+            "role": "Converting to extension"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "Hashtag Ext",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}

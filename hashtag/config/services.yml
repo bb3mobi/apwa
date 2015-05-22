@@ -1,0 +1,8 @@
+services:
+    apwa.hashtag.listener:
+        class: apwa\hashtag\event\listener
+        arguments:
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
