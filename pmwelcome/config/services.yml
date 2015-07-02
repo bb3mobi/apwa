@@ -1,0 +1,11 @@
+services:
+    apwa.pmwelcome.listener:
+        class: apwa\pmwelcome\event\listener
+        arguments:
+            - @user
+            - @config
+            - @config_text
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }

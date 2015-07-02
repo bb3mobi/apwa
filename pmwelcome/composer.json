@@ -1,0 +1,26 @@
+{
+    "name": "apwa/pmwelcome",
+    "type": "phpbb-extension",
+    "description": "Welcome PM for registration",
+    "homepage": "http://bb3.mobi",
+    "version": "1.0.0",
+    "time": "2015-06-09",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Anvar",
+            "email": "anvar.all@mail.ru",
+            "homepage": "http://apwa.ru",
+            "role": "phpBB Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "extra": {
+        "display-name": "PM Welcome",
+        "soft-require": {
+        "phpbb/phpbb": "3.1.*@dev"
+        }
+    }
+}
