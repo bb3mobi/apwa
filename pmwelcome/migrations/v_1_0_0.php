@@ -16,6 +16,11 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 		return array('\phpbb\db\migration\data\v31x\v313');
 	}
 
+	public function effectively_installed()
+	{
+		return isset($this->config['pmwelcome_version']) && version_compare($this->config['pmwelcome_version'], '1.0.0', '>=');
+	}
+
 	public function update_data()
 	{
 		return array(
@@ -25,6 +30,9 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 
 			// Add config text
 			array('config_text.add', array('pmwelcome_post_text', '')),
+
+			// Current version
+			array('config.add', array('pmwelcome_version', '1.0.0')),
 
 			// Add ACP modules
 			array('module.add', array('acp', 'ACP_BOARD_CONFIGURATION', array(
