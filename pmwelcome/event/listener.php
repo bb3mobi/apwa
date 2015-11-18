@@ -40,20 +40,47 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.login_box_redirect' => 'pm_welcome',
+			'core.user_add_after'		=> 'pm_welcome',
+			'core.ucp_activate_after'	=> 'pm_activate_welcome',
 		);
 	}
 
-	public function pm_welcome()
+	public function pm_welcome($event)
 	{
-		$pwm_user = $this->config['pmwelcome_user'];
-		$pwm_subject = $this->config['pmwelcome_subject'];
-		$pwm_text = $this->text->get('pmwelcome_post_text');
-		if ($this->user->data['is_registered'] && $pwm_user && $pwm_subject && $pwm_text)
+		$user_row = $event['user_row'];
+		if ($user_row['user_type'] == USER_NORMAL)
 		{
-			if ($this->user->data['session_last_visit'] == time())
+			$pwm_user = $this->config['pmwelcome_user'];
+			$pwm_subject = $this->config['pmwelcome_subject'];
+			$pwm_text = $this->text->get('pmwelcome_post_text');
+			if ($pwm_user && $pwm_subject && $pwm_text)
 			{
-				$this->user_welcome($this->user->data['user_id'], $pwm_user, $pwm_subject, $pwm_text);
+				$user_to = array(
+					'user_id'	=> $event['user_id'],
+					'username'	=> $user_row['username'],
+				);
+
+				$this->user_welcome($user_to, $pwm_user, $pwm_subject, $pwm_text);
+			}
+		}
+	}
+
+	public function pm_activate_welcome($event)
+	{
+		$user_row = $event['user_row'];
+		if (!$user_row['user_newpasswd'])
+		{
+			$pwm_user = $this->config['pmwelcome_user'];
+			$pwm_subject = $this->config['pmwelcome_subject'];
+			$pwm_text = $this->text->get('pmwelcome_post_text');
+			if ($pwm_user && $pwm_subject && $pwm_text)
+			{
+				$user_to = array(
+					'user_id'	=> $user_row['user_id'],
+					'username'	=> $user_row['username'],
+				);
+
+				$this->user_welcome($user_to, $pwm_user, $pwm_subject, $pwm_text);
 			}
 		}
 	}
@@ -65,14 +92,14 @@ class listener implements EventSubscriberInterface
 		$uid = $bitfield = '';
 		$allow_bbcode = $allow_urls = $allow_smilies = true;
 
-		$text = str_replace('{USERNAME}', $this->user->data['username'], $text);
+		$text = str_replace('{USERNAME}', $user_to['username'], $text);
 
 		generate_text_for_storage($text, $uid, $bitfield, $m_flags, $allow_bbcode, $allow_urls, $allow_smilies);
 
 		include_once($this->phpbb_root_path . 'includes/functions_privmsgs.' . $this->php_ext);
 
 		$pm_data = array(
-			'address_list'		=> array('u' => array($user_to => 'to')),
+			'address_list'		=> array('u' => array($user_to['user_id'] => 'to')),
 			'from_user_id'		=> $user_id,
 			'from_user_ip'		=> $this->user->ip,
 			'enable_sig'		=> false,

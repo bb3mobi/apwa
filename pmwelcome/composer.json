@@ -1,16 +1,16 @@
 {
     "name": "apwa/pmwelcome",
     "type": "phpbb-extension",
-    "description": "Welcome PM for registration",
-    "homepage": "http://bb3.mobi",
-    "version": "1.0.0",
+    "description": "Welcome PM for registration and activation",
+    "homepage": "http://phpbbguru.net",
+    "version": "1.0.1",
     "time": "2015-06-09",
     "license": "GPL-2.0",
     "authors": [
         {
             "name": "Anvar",
             "email": "anvar.all@mail.ru",
-            "homepage": "http://apwa.ru",
+            "homepage": "http://bb3.mobi",
             "role": "phpBB Developer"
         }
     ],
