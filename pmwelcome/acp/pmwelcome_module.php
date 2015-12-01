@@ -17,21 +17,32 @@ class pmwelcome_module
 	function main($id, $mode)
 	{
 		global $config, $user, $template, $request, $phpbb_container;
+		global $phpbb_root_path, $phpEx;
 
 		$this->user = $user;
-		$this->tpl_name = 'acp_board';
+		$this->tpl_name = 'acp_pmwelcome';
 		$this->page_title = 'ACP_PMWELCOME_SETTINGS';
 
+		$this->user->add_lang(array('acp/board', 'posting'));
+
 		$submit = $request->is_set_post('submit');
+		$preview = $request->is_set_post('preview');
 
 		$form_key = 'pmwelcome';
 		add_form_key($form_key);
+
+		$user_name = '';
+		if (!$submit)
+		{
+			$user_info = $this->pm_welcome_user_name($config['pmwelcome_user']);
+			$user_name = '<a href="' . append_sid("{$phpbb_root_path}memberlist.$phpEx", 'mode=viewprofile&amp;u=' . $user_info['user_id']) . '">' . $user_info['username'] . '</a>';
+		}
 
 		$display_vars = array(
 			'title'	=> 'ACP_PMWELCOME',
 			'vars'	=> array(
 				'legend1'	=> 'ACP_PMWELCOME_SETTINGS',
-				'pmwelcome_user'		=> array('lang' => 'ACP_PMWELCOME_USER',	'validate' => 'int:0:255',	'type' => 'number:0:255', 'explain' => true),
+				'pmwelcome_user'		=> array('lang' => 'ACP_PMWELCOME_USER',	'validate' => 'int:2:255',	'type' => 'number:2:255', 'explain' => true, 'append' => ' ' . $user_name),
 				'pmwelcome_subject'		=> array('lang' => 'ACP_PMWELCOME_SUBJECT',	'validate' => 'string',		'type' => 'text:50:250', 'explain' => false),
 				'pmwelcome_post_text'	=> array('lang' => 'ACP_PMWELCOME_TEXT',	'validate' => '',			'type' => 'textarea:15:30', 'explain' => true),
 
@@ -63,11 +74,10 @@ class pmwelcome_module
 			$submit = false;
 		}
 
-		/* config text class && Anvar */
+		/* Config text Welcome */
 		$config_text = $phpbb_container->get('config_text');
-		$text_ary = array(
-			'pmwelcome_post_text',
-		);
+		$pmwelcome_post_text = $config_text->get('pmwelcome_post_text');
+		$text_ary = array('pmwelcome_post_text');
 
 		// We go through the display_vars to make sure no one is trying to set variables he/she is not allowed to...
 		foreach ($display_vars['vars'] as $config_name => $null)
@@ -81,7 +91,19 @@ class pmwelcome_module
 
 			if ($submit)
 			{
-				/* Add config text && Anvar */
+				/* Find user */
+				if ($config_name == 'pmwelcome_user')
+				{
+					$inder_fo = $this->pm_welcome_user_name($config_value);
+					if ($inder_fo['error'])
+					{
+						$error[] = $inder_fo['error'];
+						$submit = false;
+						continue;
+					}
+				}
+
+				/* Add config text Welcome Add */
 				if (in_array($config_name, $text_ary))
 				{
 					$config_text->set($config_name, $config_value);
@@ -91,11 +113,27 @@ class pmwelcome_module
 					$config->set($config_name, $config_value);
 				}
 			}
+
+			/* Config text Welcome Preview*/
+			if (in_array($config_name, $text_ary) && $preview)
+			{
+				$pmwelcome_post_text = $config_value;
+			}
 		}
 
 		if ($submit)
 		{
 			trigger_error($user->lang['CONFIG_UPDATED'] . adm_back_link($this->u_action));
+		}
+
+		/* Config text Welcome Preview */
+		if (!empty($pmwelcome_post_text))
+		{
+			$flags = 3;
+			$uid = $bitfield = '';
+			$preview_text = $pmwelcome_post_text;
+			generate_text_for_storage($preview_text, $uid, $bitfield, $flags, true, true, true);
+			$preview_text = generate_text_for_display($preview_text, $uid, $bitfield, $flags);
 		}
 
 		$this->page_title = $display_vars['title'];
@@ -105,6 +143,8 @@ class pmwelcome_module
 			'L_TITLE_EXPLAIN'	=> $user->lang[$display_vars['title'] . '_EXPLAIN'],
 			'S_ERROR'			=> (sizeof($error)) ? true : false,
 			'ERROR_MSG'			=> implode('<br />', $error),
+			'POST_TEXT'			=> $pmwelcome_post_text,
+			'PREVIEW_TEXT'		=> $preview_text,
 			'U_ACTION'			=> $this->u_action)
 		);
 
@@ -140,7 +180,8 @@ class pmwelcome_module
 			/* Get config text && Anvar */
 			if (in_array($config_key, $text_ary))
 			{
-				$this->new_config[$config_key] = $config_text->get($config_key);
+				continue;
+				//$this->new_config[$config_key] = $config_text->get($config_key);
 			}
 
 			$content = build_cfg_template($type, $config_key, $this->new_config, $config_key, $vars);
@@ -161,5 +202,26 @@ class pmwelcome_module
 
 			unset($display_vars['vars'][$config_key]);
 		}
+	}
+
+	function pm_welcome_user_name($user_id)
+	{
+		global $db;
+
+		$inder_fo = array();
+
+		$sql = 'SELECT user_id, username
+			FROM ' . USERS_TABLE . "
+			WHERE user_id = " . (int) $user_id;
+		$result = $db->sql_query($sql);
+		$inder_fo = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+
+		if (!$inder_fo['username'])
+		{
+			$inder_fo['error'] = $this->user->lang['NO_USER'];
+		}
+
+		return $inder_fo;
 	}
 }

@@ -1,0 +1,83 @@
+<!-- INCLUDE overall_header.html -->
+<script type="text/javascript">
+// <![CDATA[
+
+	var form_name = 'acp_board';
+	var text_name = 'config[pmwelcome_post_text]';
+	var load_draft = false;
+	var upload = false;
+	var imageTag = false;
+
+// ]]>
+</script>
+
+<a id="maincontent"></a>
+
+<h1>{L_TITLE}</h1>
+
+<p>{L_TITLE_EXPLAIN}</p>
+
+<!-- IF S_ERROR -->
+	<div class="errorbox">
+		<h3>{L_WARNING}</h3>
+		<p>{ERROR_MSG}</p>
+	</div>
+<!-- ENDIF -->
+
+<form id="acp_board" method="post" action="{U_ACTION}">
+
+<fieldset>
+	<legend>{L_ACP_PMWELCOME_TEXT}</legend>
+	<p>{L_ACP_PMWELCOME_TEXT_EXPLAIN}</p>
+
+	<dl class="responsive-columns">
+		<dt><!-- INCLUDE acp_posting_buttons.html -->
+			<p id="color_palette_placeholder" data-orientation="h" data-height="12" data-width="15" data-bbcode="true"></p>
+		</dt>
+
+		<dd>
+			<textarea name="config[pmwelcome_post_text]" rows="10" cols="60" style="width: 95%;" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" data-bbcode="true">{POST_TEXT}</textarea>
+			<input class="button2" type="submit" name="preview" value="{L_PREVIEW}" />
+		</dd>
+	</dl>
+	<dl>
+		<dt><label for="preview">{L_PREVIEW}</label></dt>
+		<dd id="preview">{PREVIEW_TEXT}</dd>
+	</dl>
+</fieldset>
+
+<!-- BEGIN options -->
+	<!-- IF options.S_LEGEND -->
+		<!-- IF not options.S_FIRST_ROW -->
+			</fieldset>
+		<!-- ENDIF -->
+		<fieldset>
+			<legend>{options.LEGEND}</legend>
+	<!-- ELSE -->
+
+		<dl>
+			<dt><label for="{options.KEY}">{options.TITLE}{L_COLON}</label><!-- IF options.S_EXPLAIN --><br /><span>{options.TITLE_EXPLAIN}</span><!-- ENDIF --></dt>
+			<dd>{options.CONTENT}</dd>
+		</dl>
+
+	<!-- ENDIF -->
+<!-- END options -->
+
+<!-- IF S_AUTH -->
+	</fieldset>
+	<!-- BEGIN auth_tpl -->
+		<!-- INCLUDE {auth_tpl.TEMPLATE_FILE} -->
+	<!-- END auth_tpl -->
+	<fieldset>
+		<legend>{L_ACP_SUBMIT_CHANGES}</legend>
+<!-- ENDIF -->
+
+	<p class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+	</p>
+	{S_FORM_TOKEN}
+</fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

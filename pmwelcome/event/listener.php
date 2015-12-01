@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Mobile Devices
+* @package PM Welcome
 * @copyright (c) bb3.mobi 2014 Anvar
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
