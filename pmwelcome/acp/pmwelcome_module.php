@@ -95,7 +95,7 @@ class pmwelcome_module
 				if ($config_name == 'pmwelcome_user')
 				{
 					$inder_fo = $this->pm_welcome_user_name($config_value);
-					if ($inder_fo['error'])
+					if (isset($inder_fo['error']) && $inder_fo['error'])
 					{
 						$error[] = $inder_fo['error'];
 						$submit = false;
