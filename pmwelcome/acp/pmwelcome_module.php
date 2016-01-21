@@ -127,6 +127,7 @@ class pmwelcome_module
 		}
 
 		/* Config text Welcome Preview */
+		$preview_text = '';
 		if (!empty($pmwelcome_post_text))
 		{
 			$flags = 3;
